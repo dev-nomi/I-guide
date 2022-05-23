@@ -1,0 +1,17 @@
+.ui{
+  font-family: 'Balsamiq Sans', cursive !important;
+}
+
+body{
+  background-color: #a2c4c9;
+}
+
+button{
+  background-color: #06383f !important;
+  color: white !important;
+}
+
+.ui.card{
+  width: 100% !important;
+  border-radius: 10px !important;
+}

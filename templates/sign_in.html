@@ -1,0 +1,24 @@
+{% extends 'layout.html' %}
+{% block title %} Sign in {% endblock %}
+{% block content %}  
+  <div class="ui card">
+    <div class="content">
+      <div class="header center aligned">Sign In</div>
+      <div class="description">
+        <form class="ui form" method="POST" action="{{ url_for('sign_in') }}">
+          <div class="field">
+            <label>Email</label>
+            <input type="email" name="email" placeholder="Email">
+          </div>
+          <div class="field">
+            <label>Password</label>
+            <input type="password" name="password" placeholder="Password">
+          </div>
+          <div class="ui grid centered" style="margin: auto;">
+            <button class="ui button" type="submit">Sign In</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}
