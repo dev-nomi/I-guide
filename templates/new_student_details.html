@@ -1,6 +1,235 @@
-{% extends 'layout.html' %}
-{% block title %} New student details {% endblock %}
+{% extends 'layout.html' %} {% block title %} New student
+details {% endblock %} {% block content %}
+<div class="row">
+  <div class="eight wide column">
+    <div class="ui card" style="padding: 2.5rem 6rem">
+      <div class="content">
+        <div class="header center aligned">
+          New student details
+        </div>
+        <br /><br />
+        <div class="description">
+          <form
+            class="ui form"
+            method="POST"
+            action="{{ url_for('new_student_details') }}"
+          >
+            <div class="field">
+              <label>Hobbies</label>
+              <input
+                type="text"
+                name="hobbies"
+                placeholder="Enter your hobbies"
+              />
+            </div>
+            <div class="field">
+              <label>Goals</label>
+              <input
+                type="text"
+                name="goals"
+                placeholder="Enter your goals"
+              />
+            </div>
+            <hr style="margin: 20px 0" />
+            <div class="center aligned">Matric Marks</div>
+            <div class="field">
+              <label>Matric Group</label>
+              <select
+                class="ui fluid dropdown matric-group"
+              >
+                <option value="">Select</option>
+                <option value="Science ( Bio)">
+                  Science ( Bio)
+                </option>
+                <option value="Science (Computer )">
+                  Science (Computer )
+                </option>
+                <option value="O level">O level</option>
+              </select>
+            </div>
+            <div class="fields">
+              <div class="field">
+                <label>English Marks</label>
+                <input
+                  type="number"
+                  name="m_english_marks"
+                  placeholder="Enter Marks"
+                />
+              </div>
+              <div class="field">
+                <label>Urdu Marks</label>
+                <input
+                  type="number"
+                  name="m_urdu_marks"
+                  placeholder="Enter Marks"
+                />
+              </div>
+              <div class="field">
+                <label>Islamic Studies Marks</label>
+                <input
+                  type="number"
+                  name="m_islamic_studies_marks"
+                  placeholder="Enter Marks"
+                />
+              </div>
+            </div>
+            <div class="fields">
+              <div class="field">
+                <label>Pak Studies Marks</label>
+                <input
+                  type="number"
+                  name="m_pak_studies_marks"
+                  placeholder="Enter Marks"
+                />
+              </div>
+              <div class="field">
+                <label>Biology/Computer Marks</label>
+                <input
+                  type="number"
+                  name="m_bio_comp_marks"
+                  placeholder="Enter Marks"
+                />
+              </div>
+              <div class="field">
+                <label>Physics Marks</label>
+                <input
+                  type="number"
+                  name="m_physics_marks"
+                  placeholder="Enter Marks"
+                />
+              </div>
+            </div>
+            <div class="fields">
+              <div class="field">
+                <label>Chemistry Marks</label>
+                <input
+                  type="number"
+                  name="m_chemistry_marks"
+                  placeholder="Enter Marks"
+                />
+              </div>
+              <div class="field">
+                <label>Mathematics Marks</label>
+                <input
+                  type="number"
+                  name="m_mathematics_marks"
+                  placeholder="Enter Marks"
+                />
+              </div>
+              <div class="field" style="opacity: 0">
+                <label>Last name</label>
+                <input
+                  disabled
+                  type="number"
+                  placeholder="Last Name"
+                />
+              </div>
+            </div>
 
-{% block content %}
-  <h1>New student details</h1>
+            <hr style="margin: 20px 0" />
+            <div class="center aligned">
+              Intermediate Marks
+            </div>
+            <div class="field">
+              <label>Intermediate Group</label>
+              <select
+                class="ui fluid dropdown intermediate-group"
+              >
+                <option value="">Select</option>
+                <option value="FSC (Pre-Engineering)">
+                  FSC (Pre-Engineering)
+                </option>
+                <option value="FSC (Pre - Medical)">
+                  FSC (Pre - Medical)
+                </option>
+                <option value="ICS (Computer Science)">
+                  ICS (Computer Science)
+                </option>
+                <option value="ICS (Statistics)">
+                  ICS (Statistics)
+                </option>
+                <option value="A level">A level</option>
+              </select>
+            </div>
+            <div class="fields">
+              <div class="field">
+                <label>English Marks</label>
+                <input
+                  type="number"
+                  name="i_english_marks"
+                  placeholder="Enter Marks"
+                />
+              </div>
+              <div class="field">
+                <label>Urdu Marks</label>
+                <input
+                  type="number"
+                  name="i_urdu_marks"
+                  placeholder="Enter Marks"
+                />
+              </div>
+              <div class="field">
+                <label>Islamic Studies Marks</label>
+                <input
+                  type="number"
+                  name="i_islamic_studies_marks"
+                  placeholder="Enter Marks"
+                />
+              </div>
+            </div>
+            <div class="fields">
+              <div class="field">
+                <label>Pak Studies Marks</label>
+                <input
+                  type="number"
+                  name="i_pak_studies_marks"
+                  placeholder="Enter Marks"
+                />
+              </div>
+              <div class="field">
+                <label>Mathematics/Biology Marks</label>
+                <input
+                  type="number"
+                  name="i_math_bio_marks"
+                  placeholder="Enter Marks"
+                />
+              </div>
+              <div class="field">
+                <label>Physics/Statistics Marks</label>
+                <input
+                  type="number"
+                  name="i_physics_statistics_mark"
+                  placeholder="Enter Marks"
+                />
+              </div>
+            </div>
+            <div class="fields">
+              <div class="field">
+                <label>Computer/Chemistry Marks</label>
+                <input
+                  type="number"
+                  name="i_comp_chem_marks"
+                  placeholder="Enter Marks"
+                />
+              </div>
+            </div>
+
+            <div
+              class="ui grid centered"
+              style="margin: auto"
+            >
+              <button class="ui large button" type="submit">
+                Predict
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  $(".matric-group").dropdown();
+  $(".intermediate-group").dropdown();
+</script>
 {% endblock %}

@@ -46,7 +46,7 @@ def sign_up():
   return render_template('sign_up.html')
 
 
-@app.route('/new_student_details')
+@app.route('/new_student_details', methods = ['POST','GET'])
 def new_student_details():
   if session['email']:
     return render_template('new_student_details.html')
