@@ -1,6 +1,9 @@
 from flask import Flask,render_template,request,flash,redirect,url_for,session
 import sqlite3
 import pandas as pd
+import pickle5 as pickle
+from nltk import PorterStemmer
+
 app = Flask(__name__)
 
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
@@ -49,7 +52,7 @@ def sign_up():
 
 @app.route('/new_student_details', methods = ['POST','GET'])
 def new_student_details():
-  if session['email']:
+  if session['email'] and request.method=='POST':
     hobbies_input = request.form.get('hobbies')
     goals_input = request.form.get('goals')
     m_group_input = request.form.get('m_group')
@@ -91,12 +94,77 @@ def new_student_details():
       "I-Physics/Statistics":[i_physics_statistics_marks_input],
       "I-Comp/Chem":[i_comp_chem_marks_input],
     })
+    m_group_pkl_file = open('./models/m_group_label_encoder.pkl', 'rb')
+    m_group_label_encoder = pickle.load(m_group_pkl_file) 
+    m_group_pkl_file.close()
 
-    # Transform Input (Categorical) Attributes of Unseen Data into Numerical Representation
+    i_group_pkl_file = open('./models/i_group_label_encoder.pkl', 'rb')
+    i_group_label_encoder = pickle.load(i_group_pkl_file) 
+    i_group_pkl_file.close()
+	
+
+    #Transform Input (Categorical) Attributes of Unseen Data into Numerical Representation
     unseen_data_features = user_input.copy()
     unseen_data_features["M-Group"] = m_group_label_encoder.transform(user_input['M-Group'])
     unseen_data_features["I-Group"] = i_group_label_encoder.transform(user_input['I-Group'])
+
+    unseen_data_features['Hobbies'] = unseen_data_features['Hobbies'].str.replace("[^a-zA-Z#]", " ", regex=True)
+    unseen_data_features['Goals'] = unseen_data_features['Goals'].str.replace("[^a-zA-Z#]", " ", regex=True)
     
+    unseen_data_features['Hobbies'] = unseen_data_features['Hobbies'].apply(lambda x: ' '.join([w for w in x.split() if len(w)>5]))
+    unseen_data_features['Goals'] = unseen_data_features['Goals'].apply(lambda x: ' '.join([w for w in x.split() if len(w)>2]))
+
+    tokenized_hobbies = unseen_data_features['Hobbies'].apply(lambda x: x.split())
+    tokenized_goals = unseen_data_features['Goals'].apply(lambda x: x.split())
+
+    ps = PorterStemmer()
+    tokenized_hobbies = tokenized_hobbies.apply(lambda x: [ps.stem(i) for i in x])
+    tokenized_goals = tokenized_goals.apply(lambda x: [ps.stem(i) for i in x])
+
+    unseen_data_features['Hobbies'] = ' '.join(tokenized_hobbies[0])
+    unseen_data_features['Goals'] = ' '.join(tokenized_goals[0])
+
+    hobbies = unseen_data_features['Hobbies']
+    count_vectorizer_hobbies_pkl_file = open('./models/count_vectorizer_hobbies_unigram.pkl', 'rb')
+    count_vectorizer_hobbies = pickle.load(count_vectorizer_hobbies_pkl_file) 
+    count_vectorizer_hobbies_pkl_file.close()
+    # Transform the Input Text using Count Vectorizer
+    transform_features = count_vectorizer_hobbies.transform(hobbies)
+
+    # Get the name of Features (Feature  Set)
+    feature_set = count_vectorizer_hobbies.get_feature_names_out()
+
+    # Convert Transformed features into Array and Create a Dataframe
+    hobbies_input_features = pd.DataFrame(transform_features.toarray(), columns = feature_set)
+
+
+    goals = unseen_data_features['Goals']
+    count_vectorizer_goals_pkl_file = open('./models/count_vectorizer_goals_unigram.pkl', 'rb')
+    count_vectorizer_goals = pickle.load(count_vectorizer_goals_pkl_file) 
+    count_vectorizer_goals_pkl_file.close()
+    
+    # Transform the Input Text using Count Vectorizer
+    transform_features = count_vectorizer_goals.transform(goals)
+
+    # Get the name of Features (Feature  Set)
+    feature_set = count_vectorizer_goals.get_feature_names_out()
+
+    # Convert Transformed features into Array and Create a Dataframe
+    goals_input_features = pd.DataFrame(transform_features.toarray(), columns = feature_set)
+    unseen_data_features.drop(['Hobbies', 'Goals'], axis=1, inplace=True)
+    unseen_data_features = pd.concat([unseen_data_features, hobbies_input_features], axis=1, join='inner')
+    unseen_data_features = pd.concat([unseen_data_features, goals_input_features], axis=1, join='inner')
+  
+    model = pickle.load(open('./models/gnb_trained_model.pkl', 'rb'))
+    predicted_program = model.predict(unseen_data_features)
+
+    if(predicted_program == 0): 
+      prediction = "Computer Science"
+    if(predicted_program == 1):
+      prediction = "Software Engineering"
+
+    return render_template('prediction.html',prediction=prediction)
+  elif request.method == 'GET':
     return render_template('new_student_details.html')
   else:
     flash('Access denied.','negative')
