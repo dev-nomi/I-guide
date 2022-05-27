@@ -27,6 +27,7 @@ def sign_in():
     conn.close()
     if user:
       session['email'] = email
+      session['name'] = user[0]['name']
       flash('You were successfully signed in.','positive')
       return redirect(url_for('new_student_details'))
     else:

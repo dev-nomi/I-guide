@@ -52,7 +52,7 @@
           class="teal item"
           href="{{ url_for('sign_out')}}"
         >
-          Sign out
+          Sign out({{ session['name'] }})
         </a>
         {% else %}
         <a class="teal item" href="{{ url_for('sign_in')}}">
@@ -72,10 +72,6 @@
           get_flashed_messages(with_categories=true) %} {%
           if messages %} {% for category,message in messages
           %}
-          <!-- <div class="ui floating message {{ category }}">
-            <i class="close icon"></i>
-            {{ message }}
-          </div> -->
           <div
             class="ui icon {{ category }} mini floating message"
           >
