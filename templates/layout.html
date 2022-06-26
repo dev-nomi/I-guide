@@ -46,13 +46,22 @@
       <a class="teal item" href="{{ url_for('home')}}">
         Home
       </a>
+      <a
+        class="teal item"
+        href="{{ url_for('new_student_details')}}"
+      >
+        Student Details
+      </a>
+      <a class="teal item" href="{{ url_for('feedback')}}">
+        Feedback
+      </a>
       <div class="right menu">
         {% if session['email'] %}
         <a
           class="teal item"
           href="{{ url_for('sign_out')}}"
         >
-          Sign out({{ session['name'] }})
+          Sign out
         </a>
         {% else %}
         <a class="teal item" href="{{ url_for('sign_in')}}">

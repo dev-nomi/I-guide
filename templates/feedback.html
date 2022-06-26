@@ -1,0 +1,46 @@
+{% extends 'layout.html' %} {% block title %} Feedback {%
+endblock %} {% block content %}
+<div class="row">
+  <div class="four wide column">
+    <div class="ui card">
+      <div class="content">
+        <div class="ui header center aligned">Feedback</div>
+        <div class="description">
+          <form
+            class="ui form"
+            method="POST"
+            action="{{ url_for('feedback') }}"
+          >
+            <div class="field">
+              <label>Comment</label>
+              <textarea rows="5"></textarea>
+            </div>
+            <div class="field">
+              <label>Rating</label>
+              <div
+                class="ui heart rating"
+                data-rating="1"
+                data-max-rating="5"
+              ></div>
+            </div>
+            <div
+              class="ui grid centered"
+              style="margin: auto"
+            >
+              <button class="ui button" type="submit">
+                Submit
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  $(".ui.rating").rating({
+    initialRating: 1,
+    maxRating: 5,
+  });
+</script>
+{% endblock %}

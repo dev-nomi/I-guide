@@ -27,7 +27,6 @@ def sign_in():
     conn.close()
     if user:
       session['email'] = email
-      session['name'] = user[0]['name']
       flash('You were successfully signed in.','positive')
       return redirect(url_for('new_student_details'))
     else:
@@ -176,3 +175,7 @@ def sign_out():
   session['email'] = None
   flash('You were successfully signed out.','positive')
   return render_template('home.html')
+
+@app.route('/feedback')
+def feedback():
+  return render_template('feedback.html')
