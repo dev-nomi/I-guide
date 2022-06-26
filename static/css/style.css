@@ -15,3 +15,14 @@ button {
   width: 100% !important;
   border-radius: 10px !important;
 }
+
+#matric {
+  display: none;
+}
+#inter {
+  display: none;
+}
+
+.steps {
+  width: 100%;
+}
