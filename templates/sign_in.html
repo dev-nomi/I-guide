@@ -16,7 +16,6 @@ endblock %} {% block content %}
               <input
                 type="email"
                 name="email"
-                required
                 placeholder="Email"
               />
             </div>
@@ -25,7 +24,6 @@ endblock %} {% block content %}
               <input
                 type="password"
                 name="password"
-                required
                 placeholder="Password"
               />
             </div>
@@ -37,10 +35,39 @@ endblock %} {% block content %}
                 Sign In
               </button>
             </div>
+            <div class="ui error message"></div>
           </form>
         </div>
       </div>
     </div>
   </div>
 </div>
+<script>
+  $(".ui.form").form({
+    fields: {
+      email: {
+        rules: [
+          {
+            type: "empty",
+            prompt: "Email Can't be Empty",
+          },
+        ],
+      },
+      password: {
+        identifier: "password",
+        rules: [
+          {
+            type: "empty",
+            prompt: "Please enter a password",
+          },
+          {
+            type: "minLength[6]",
+            prompt:
+              "Your password must be at least {ruleValue} characters",
+          },
+        ],
+      },
+    },
+  });
+</script>
 {% endblock %}

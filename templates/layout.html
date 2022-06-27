@@ -46,6 +46,7 @@
       <a class="teal item" href="{{ url_for('home')}}">
         Home
       </a>
+      {% if session['email'] %}
       <a
         class="teal item"
         href="{{ url_for('new_student_details')}}"
@@ -55,6 +56,7 @@
       <a class="teal item" href="{{ url_for('feedback')}}">
         Feedback
       </a>
+      {% endif %}
       <div class="right menu">
         {% if session['email'] %}
         <a
