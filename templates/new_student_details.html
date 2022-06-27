@@ -14,6 +14,10 @@ details {% endblock %} {% block content %}
           New student details
         </div>
         <br />
+        <div
+          class="ui error message"
+          style="display: none"
+        ></div>
         <div class="description">
           <form
             class="ui form"
@@ -293,13 +297,29 @@ details {% endblock %} {% block content %}
   });
 
   $(".info-next").click(function () {
-    $(".first").addClass("completed");
-    $("#info").hide();
-    $("#matric").show();
-    $(".second").addClass("active");
-    $(".first").removeClass("active");
-    $(".third").removeClass("active");
-    $("#inter").hide();
+    hobbiesVal = $("input[name=hobbies]").val();
+    goalsVal = $("input[name=goals]").val();
+    if (hobbiesVal == "" && goalsVal == "") {
+      $(".ui.error.message").show();
+      $(".ui.error.message").html(
+        "• Hobbies Can't Empty. </br> • Goals Can't Empty."
+      );
+    } else if (hobbiesVal == "") {
+      $(".ui.error.message").show();
+      $(".ui.error.message").html("• Hobbies Can't Empty.");
+    } else if (goalsVal == "") {
+      $(".ui.error.message").show();
+      $(".ui.error.message").html("• Goals Can't Empty.");
+    } else {
+      $(".ui.error.message").hide();
+      $(".first").addClass("completed");
+      $("#info").hide();
+      $("#matric").show();
+      $(".second").addClass("active");
+      $(".first").removeClass("active");
+      $(".third").removeClass("active");
+      $("#inter").hide();
+    }
   });
 
   $(".info-matric").click(function () {
@@ -310,6 +330,19 @@ details {% endblock %} {% block content %}
     $(".first").removeClass("active");
     $(".second").removeClass("active");
     $("#inter").show();
+  });
+
+  $(".ui.form").form({
+    fields: {
+      hobbies: {
+        rules: [
+          {
+            type: "empty",
+            prompt: "Email Can't be Empty",
+          },
+        ],
+      },
+    },
   });
 </script>
 {% endblock %}

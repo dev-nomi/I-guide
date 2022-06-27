@@ -1,17 +1,24 @@
 from flask import Flask,render_template,request,flash,redirect,url_for,session
-import sqlite3
 import pandas as pd
 import pickle5 as pickle
 from nltk import PorterStemmer
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database/iguide_database.sqlite3'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
 
-def get_db_connection():
-  conn = sqlite3.connect('database.db')
-  conn.row_factory = sqlite3.Row
-  return conn
+class User(db.Model):
+  id = db.Column("id",db.Integer, primary_key=True)
+  name = db.Column("name",db.String(80), unique=True, nullable=False)
+  email = db.Column("email",db.String(120), unique=True, nullable=False)
+  password = db.Column("password",db.String(60), nullable=False)
+   
+  def __repr__(self):
+    return f"User('{self.name}', '{self.email}')"
 
 @app.route('/')
 def home():
@@ -22,9 +29,7 @@ def sign_in():
   if request.method == 'POST':
     email = request.form.get('email')
     password = request.form.get('password')
-    conn = get_db_connection()
-    user = conn.execute('SELECT * FROM users where password=? and email=?',(password,email,)).fetchall()
-    conn.close()
+    user = User.query.filter_by(email=email,password=password).all()
     if user:
       session['email'] = email
       flash('You were successfully signed in.','positive')
@@ -40,13 +45,15 @@ def sign_up():
     name = request.form.get('name')
     email = request.form.get('email')
     password = request.form.get('password')
-    conn = get_db_connection()
-    user = conn.execute("INSERT INTO users (name, email, password) VALUES (?, ?, ?)",
-            (name, email, password))
-    conn.commit()
-    conn.close()
-    flash('You were successfully signed up.','positive')
-    return redirect(url_for('sign_in'))
+    try:
+      user_1 = User(name=name,email=email,password=password)
+      db.session.add(user_1)
+      db.session.commit()
+      flash('You were successfully signed up.','positive')
+      return redirect(url_for('sign_in'))
+    except Exception as e:
+      flash("Oops! Can't be signed up.",'negative')
+      return redirect(url_for('sign_up'))
   return render_template('sign_up.html')
 
 
@@ -179,3 +186,6 @@ def sign_out():
 @app.route('/feedback')
 def feedback():
   return render_template('feedback.html')
+
+if __name__ == "__main__":
+  db.create_all()
