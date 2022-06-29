@@ -185,13 +185,13 @@ def new_student_details():
     return render_template('new_student_details.html')
   else:
     flash('Access denied.','negative')
-    return render_template('home.html')
+    return redirect(url_for('home'))
 
 @app.route('/sign_out')
 def sign_out():
   session['email'] = None
   flash('You were successfully signed out.','positive')
-  return render_template('home.html')
+  return redirect(url_for('home'))
 
 @app.route('/feedback', methods = ['POST','GET'])
 def feedback():
@@ -203,6 +203,6 @@ def feedback():
     db.session.add(feedback)
     db.session.commit()
     flash('You were successfully added feedback.','positive')
-    return render_template('home.html')
+    return redirect(url_for('home'))
   else:
     return render_template('feedback.html')
