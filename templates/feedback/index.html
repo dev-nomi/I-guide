@@ -1,0 +1,31 @@
+{% extends 'layout.html' %} {% block title %} All Feedback
+{% endblock %} {% block content %}
+<div class="row">
+  <div class="ui eight wide column center aligned">
+    <h1 class="ui">All Feedbacks</h1>
+  </div>
+</div>
+<div class="row">
+  <div class="ui six wide column">
+    {%for feedback in feedbacks%}
+    <div class="ui card">
+      <div class="content">
+        <div class="ui header aligned">
+          {{ feedback.content }}
+        </div>
+        <div class="description">
+          <div
+            class="ui star rating"
+            data-rating="{{ feedback.rating }}"
+            data-max-rating="5"
+          ></div>
+        </div>
+      </div>
+    </div>
+    {%endfor%}
+  </div>
+</div>
+<script>
+  $(".ui.rating").rating("disable");
+</script>
+{% endblock %}

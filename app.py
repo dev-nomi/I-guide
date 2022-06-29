@@ -205,4 +205,9 @@ def feedback():
     flash('You were successfully added feedback.','positive')
     return redirect(url_for('home'))
   else:
-    return render_template('feedback.html')
+    return render_template('feedback/add.html')
+
+@app.route('/feedbacks')
+def feedbacks():
+  feedbacks = Feedback.query.all()
+  return render_template('feedback/index.html', feedbacks=feedbacks )
