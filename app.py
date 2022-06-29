@@ -208,4 +208,5 @@ def feedback():
     return render_template('feedback.html')
 
 if __name__ == "__main__":
+  db.drop_all()
   db.create_all()
