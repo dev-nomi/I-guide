@@ -16,9 +16,19 @@ class User(db.Model):
   name = db.Column("name",db.String(80), unique=True, nullable=False)
   email = db.Column("email",db.String(120), unique=True, nullable=False)
   password = db.Column("password",db.String(60), nullable=False)
+  feedbacks = db.relationship('Feedback', backref='user')
    
   def __repr__(self):
-    return f"User('{self.name}', '{self.email}')"
+    return f'<User "{self.name}", "{self.email}" >'
+
+class Feedback(db.Model):
+    id = db.Column("id",db.Integer, primary_key=True)
+    content = db.Column("content",db.Text)
+    rating = db.Column("rating",db.Integer)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+    def __repr__(self):
+        return f'<Feedback "{self.content[:20]}...">'
 
 @app.route('/')
 def home():
@@ -183,9 +193,19 @@ def sign_out():
   flash('You were successfully signed out.','positive')
   return render_template('home.html')
 
-@app.route('/feedback')
+@app.route('/feedback', methods = ['POST','GET'])
 def feedback():
-  return render_template('feedback.html')
+  if session['email'] and request.method=='POST':
+    user = User.query.filter_by(email = session['email']).all()
+    comment_input = request.form.get('comment')
+    rating_input = request.form.get('rating')
+    feedback = Feedback(content=comment_input,rating=rating_input,user_id=user[0].id)
+    db.session.add(feedback)
+    db.session.commit()
+    flash('You were successfully added feedback.','positive')
+    return render_template('home.html')
+  else:
+    return render_template('feedback.html')
 
 if __name__ == "__main__":
   db.create_all()

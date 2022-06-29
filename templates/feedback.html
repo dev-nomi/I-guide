@@ -13,15 +13,20 @@ endblock %} {% block content %}
           >
             <div class="field">
               <label>Comment</label>
-              <textarea rows="5"></textarea>
+              <textarea name="comment" rows="5"></textarea>
             </div>
             <div class="field">
               <label>Rating</label>
               <div
-                class="ui heart rating"
-                data-rating="1"
+                class="ui star rating"
+                data-rating="3"
                 data-max-rating="5"
               ></div>
+              <input
+                type="hidden"
+                id="rating"
+                name="rating"
+              />
             </div>
             <div
               class="ui grid centered"
@@ -39,8 +44,14 @@ endblock %} {% block content %}
 </div>
 <script>
   $(".ui.rating").rating({
-    initialRating: 1,
+    initialRating: 3,
     maxRating: 5,
+  });
+  rating = $(".ui.rating").rating("get rating");
+  $("#rating").val(rating);
+  $(".ui.rating").click(function () {
+    rating = $(".ui.rating").rating("get rating");
+    $("#rating").val(rating);
   });
 </script>
 {% endblock %}
