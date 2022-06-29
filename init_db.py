@@ -1,5 +1,8 @@
 from app import db, User, Feedback
 
+db.drop_all()
+db.create_all()
+
 user1 = User(name="noman", email="noman@gmail.com", password="123456")
 user2 = User(name="noman khalid", email="noman@khalid.com", password="123456")
 
