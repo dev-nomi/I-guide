@@ -199,7 +199,7 @@ def feedback():
     user = User.query.filter_by(email = session['email']).all()
     comment_input = request.form.get('comment')
     rating_input = request.form.get('rating')
-    feedback = Feedback(content=comment_input,rating=rating_input,user_id=user[0].id)
+    feedback = Feedback(content=comment_input,rating=rating_input,user=user)
     db.session.add(feedback)
     db.session.commit()
     flash('You were successfully added feedback.','positive')
