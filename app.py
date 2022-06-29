@@ -30,6 +30,11 @@ class Feedback(db.Model):
     def __repr__(self):
         return f'<Feedback "{self.content[:20]}...">'
 
+student_details = {
+  "hobbies": "",
+  "goals": ""
+}
+
 @app.route('/')
 def home():
   return render_template('home.html')
@@ -211,3 +216,19 @@ def feedback():
 def feedbacks():
   feedbacks = Feedback.query.all()
   return render_template('feedback/index.html', feedbacks=feedbacks )
+
+@app.route('/student_info',methods = ['POST','GET'])
+def student_info():
+  if request.method == 'POST':
+    hobbies_input = request.form.get('hobbies')
+    goals_input = request.form.get('goals')
+
+    student_details['hobbies'] = hobbies_input
+    student_details['goals'] = goals_input
+    session['student_details'] = student_details
+    return '', 204
+
+@app.route('/student_matric_marks',methods = ['POST','GET'])
+def student_matric_marks():
+  if request.method == 'POST':
+    return '', 204

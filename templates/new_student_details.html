@@ -20,9 +20,9 @@ details {% endblock %} {% block content %}
         ></div>
         <div class="description">
           <form
-            class="ui form"
+            class="ui form info-form"
             method="POST"
-            action="{{ url_for('new_student_details') }}"
+            action="{{ url_for('student_info') }}"
           >
             <div id="info">
               <div class="field">
@@ -30,7 +30,6 @@ details {% endblock %} {% block content %}
                 <input
                   type="text"
                   name="hobbies"
-                  required
                   placeholder="Enter your hobbies"
                 />
               </div>
@@ -39,15 +38,23 @@ details {% endblock %} {% block content %}
                 <input
                   type="text"
                   name="goals"
-                  required
                   placeholder="Enter your goals"
                 />
               </div>
-              <div class="ui large button info-next">
+              <button
+                class="ui large button info-next"
+                type="submit"
+              >
                 Next
-              </div>
+              </button>
+              <div class="ui error message"></div>
             </div>
-
+          </form>
+          <form
+            class="ui form matric-marks-form"
+            method="POST"
+            action="{{ url_for('student_matric_marks') }}"
+          >
             <div id="matric">
               <h4 class="ui center aligned">
                 Matric Marks
@@ -55,7 +62,6 @@ details {% endblock %} {% block content %}
               <div class="field">
                 <label>Matric Group</label>
                 <select
-                  required
                   name="m_group"
                   class="ui fluid dropdown matric-group"
                 >
@@ -73,7 +79,6 @@ details {% endblock %} {% block content %}
                 <div class="field">
                   <label>English Marks</label>
                   <input
-                    required
                     type="number"
                     name="m_english_marks"
                     placeholder="Enter Marks"
@@ -82,7 +87,6 @@ details {% endblock %} {% block content %}
                 <div class="field">
                   <label>Urdu Marks</label>
                   <input
-                    required
                     type="number"
                     name="m_urdu_marks"
                     placeholder="Enter Marks"
@@ -91,7 +95,6 @@ details {% endblock %} {% block content %}
                 <div class="field">
                   <label>Islamic Studies Marks</label>
                   <input
-                    required
                     type="number"
                     name="m_islamic_studies_marks"
                     placeholder="Enter Marks"
@@ -102,7 +105,6 @@ details {% endblock %} {% block content %}
                 <div class="field">
                   <label>Pak Studies Marks</label>
                   <input
-                    required
                     type="number"
                     name="m_pak_studies_marks"
                     placeholder="Enter Marks"
@@ -111,7 +113,6 @@ details {% endblock %} {% block content %}
                 <div class="field">
                   <label>Biology/Computer Marks</label>
                   <input
-                    required
                     type="number"
                     name="m_bio_comp_marks"
                     placeholder="Enter Marks"
@@ -120,7 +121,6 @@ details {% endblock %} {% block content %}
                 <div class="field">
                   <label>Physics Marks</label>
                   <input
-                    required
                     type="number"
                     name="m_physics_marks"
                     placeholder="Enter Marks"
@@ -131,7 +131,6 @@ details {% endblock %} {% block content %}
                 <div class="field">
                   <label>Chemistry Marks</label>
                   <input
-                    required
                     type="number"
                     name="m_chemistry_marks"
                     placeholder="Enter Marks"
@@ -140,7 +139,6 @@ details {% endblock %} {% block content %}
                 <div class="field">
                   <label>Mathematics Marks</label>
                   <input
-                    required
                     type="number"
                     name="m_mathematics_marks"
                     placeholder="Enter Marks"
@@ -155,11 +153,16 @@ details {% endblock %} {% block content %}
                   />
                 </div>
               </div>
-              <div class="ui large button info-matric">
+              <button
+                class="ui large button info-matric"
+                type="submit"
+              >
                 Next
-              </div>
+              </button>
+              <div class="ui error message"></div>
             </div>
-
+          </form>
+          <form>
             <div id="inter">
               <h4 class="ui center aligned">
                 Intermediate Marks
@@ -256,7 +259,7 @@ details {% endblock %} {% block content %}
                   />
                 </div>
               </div>
-              <button class="ui large button" type="submit">
+              <button class="ui large button">
                 Predict
               </button>
             </div>
@@ -297,20 +300,8 @@ details {% endblock %} {% block content %}
   });
 
   $(".info-next").click(function () {
-    hobbiesVal = $("input[name=hobbies]").val();
-    goalsVal = $("input[name=goals]").val();
-    if (hobbiesVal == "" && goalsVal == "") {
-      $(".ui.error.message").show();
-      $(".ui.error.message").html(
-        "• Hobbies Can't Empty. </br> • Goals Can't Empty."
-      );
-    } else if (hobbiesVal == "") {
-      $(".ui.error.message").show();
-      $(".ui.error.message").html("• Hobbies Can't Empty.");
-    } else if (goalsVal == "") {
-      $(".ui.error.message").show();
-      $(".ui.error.message").html("• Goals Can't Empty.");
-    } else {
+    is_valid = $(".ui.form.info-form").form("is valid");
+    if (is_valid) {
       $(".ui.error.message").hide();
       $(".first").addClass("completed");
       $("#info").hide();
@@ -323,22 +314,121 @@ details {% endblock %} {% block content %}
   });
 
   $(".info-matric").click(function () {
-    $(".second").addClass("completed");
-    $("#info").hide();
-    $("#matric").hide();
-    $(".third").addClass("active");
-    $(".first").removeClass("active");
-    $(".second").removeClass("active");
-    $("#inter").show();
+    is_valid = $(".ui.form.matric-marks-form").form(
+      "is valid"
+    );
+    if (is_valid) {
+      $(".second").addClass("completed");
+      $("#info").hide();
+      $("#matric").hide();
+      $(".third").addClass("active");
+      $(".first").removeClass("active");
+      $(".second").removeClass("active");
+      $("#inter").show();
+    }
   });
 
-  $(".ui.form").form({
+  $(".ui.form.info-form").form({
     fields: {
       hobbies: {
         rules: [
           {
             type: "empty",
-            prompt: "Email Can't be Empty",
+            prompt: "Hobbies Can't be Empty",
+          },
+        ],
+      },
+      goals: {
+        rules: [
+          {
+            type: "empty",
+            prompt: "Goals Can't be Empty",
+          },
+        ],
+      },
+    },
+  });
+
+  $(".ui.form.matric-marks-form").form({
+    fields: {
+      m_group: {
+        identifier: "m_group",
+        rules: [
+          {
+            type: "empty",
+            prompt: "Please select a group",
+          },
+        ],
+      },
+      m_english_marks: {
+        rules: [
+          {
+            type: "integer[33..150]",
+            prompt:
+              "Please enter valid value for english marks",
+          },
+        ],
+      },
+      m_urdu_marks: {
+        rules: [
+          {
+            type: "integer[33..150]",
+            prompt:
+              "Please enter valid value for urdu marks",
+          },
+        ],
+      },
+      m_islamic_studies_marks: {
+        rules: [
+          {
+            type: "integer[33..150]",
+            prompt:
+              "Please enter valid value for islamic studies marks",
+          },
+        ],
+      },
+      m_pak_studies_marks: {
+        rules: [
+          {
+            type: "integer[33..150]",
+            prompt:
+              "Please enter valid value for pakistan studies marks",
+          },
+        ],
+      },
+      m_bio_comp_marks: {
+        rules: [
+          {
+            type: "integer[33..150]",
+            prompt:
+              "Please enter valid value for biology/computer marks",
+          },
+        ],
+      },
+      m_physics_marks: {
+        rules: [
+          {
+            type: "integer[33..150]",
+            prompt:
+              "Please enter valid value for physics marks",
+          },
+        ],
+      },
+      m_chemistry_marks: {
+        rules: [
+          {
+            type: "integer[33..150]",
+            prompt:
+              "Please enter valid value for chemistry marks",
+          },
+        ],
+      },
+      m_mathematics_marks: {
+        rules: [
+          {
+            type: "integer[33..150]",
+            prompt:
+              "Please enter valid value for mathematics marks",
           },
         ],
       },
