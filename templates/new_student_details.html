@@ -162,7 +162,11 @@ details {% endblock %} {% block content %}
               <div class="ui error message"></div>
             </div>
           </form>
-          <form>
+          <form
+            class="ui form inter-marks-form"
+            method="POST"
+            action="{{ url_for('new_student_details') }}"
+          >
             <div id="inter">
               <h4 class="ui center aligned">
                 Intermediate Marks
@@ -170,7 +174,6 @@ details {% endblock %} {% block content %}
               <div class="field">
                 <label>Intermediate Group</label>
                 <select
-                  required
                   name="i_group"
                   class="ui fluid dropdown intermediate-group"
                 >
@@ -194,7 +197,6 @@ details {% endblock %} {% block content %}
                 <div class="field">
                   <label>English Marks</label>
                   <input
-                    required
                     type="number"
                     name="i_english_marks"
                     placeholder="Enter Marks"
@@ -203,7 +205,6 @@ details {% endblock %} {% block content %}
                 <div class="field">
                   <label>Urdu Marks</label>
                   <input
-                    required
                     type="number"
                     name="i_urdu_marks"
                     placeholder="Enter Marks"
@@ -212,7 +213,6 @@ details {% endblock %} {% block content %}
                 <div class="field">
                   <label>Islamic Studies Marks</label>
                   <input
-                    required
                     type="number"
                     name="i_islamic_studies_marks"
                     placeholder="Enter Marks"
@@ -223,7 +223,6 @@ details {% endblock %} {% block content %}
                 <div class="field">
                   <label>Pak Studies Marks</label>
                   <input
-                    required
                     type="number"
                     name="i_pak_studies_marks"
                     placeholder="Enter Marks"
@@ -232,7 +231,6 @@ details {% endblock %} {% block content %}
                 <div class="field">
                   <label>Mathematics/Biology Marks</label>
                   <input
-                    required
                     type="number"
                     name="i_math_bio_marks"
                     placeholder="Enter Marks"
@@ -241,7 +239,6 @@ details {% endblock %} {% block content %}
                 <div class="field">
                   <label>Physics/Statistics Marks</label>
                   <input
-                    required
                     type="number"
                     name="i_physics_statistics_marks"
                     placeholder="Enter Marks"
@@ -252,16 +249,16 @@ details {% endblock %} {% block content %}
                 <div class="field">
                   <label>Computer/Chemistry Marks</label>
                   <input
-                    required
                     type="number"
                     name="i_comp_chem_marks"
                     placeholder="Enter Marks"
                   />
                 </div>
               </div>
-              <button class="ui large button">
+              <button class="ui large button" type="submit">
                 Predict
               </button>
+              <div class="ui error message"></div>
             </div>
           </form>
         </div>
@@ -272,32 +269,6 @@ details {% endblock %} {% block content %}
 <script>
   $(".matric-group").dropdown();
   $(".intermediate-group").dropdown();
-  $(".first").click(function () {
-    $("#info").show();
-    $("#matric").hide();
-    $(".first").addClass("active");
-    $(".second").removeClass("active");
-    $(".third").removeClass("active");
-    $("#inter").hide();
-  });
-
-  $(".second").click(function () {
-    $("#info").hide();
-    $("#matric").show();
-    $(".second").addClass("active");
-    $(".first").removeClass("active");
-    $(".third").removeClass("active");
-    $("#inter").hide();
-  });
-
-  $(".third").click(function () {
-    $("#info").hide();
-    $("#matric").hide();
-    $(".third").addClass("active");
-    $(".first").removeClass("active");
-    $(".second").removeClass("active");
-    $("#inter").show();
-  });
 
   $(".info-next").click(function () {
     is_valid = $(".ui.form.info-form").form("is valid");
@@ -429,6 +400,83 @@ details {% endblock %} {% block content %}
             type: "integer[33..150]",
             prompt:
               "Please enter valid value for mathematics marks",
+          },
+        ],
+      },
+    },
+  });
+
+  $(".ui.form.inter-marks-form").form({
+    fields: {
+      i_group: {
+        identifier: "i_group",
+        rules: [
+          {
+            type: "empty",
+            prompt: "Please select a group",
+          },
+        ],
+      },
+      i_english_marks: {
+        rules: [
+          {
+            type: "integer[33..150]",
+            prompt:
+              "Please enter valid value for english marks",
+          },
+        ],
+      },
+      i_urdu_marks: {
+        rules: [
+          {
+            type: "integer[33..150]",
+            prompt:
+              "Please enter valid value for urdu marks",
+          },
+        ],
+      },
+      i_islamic_studies_marks: {
+        rules: [
+          {
+            type: "integer[33..150]",
+            prompt:
+              "Please enter valid value for islamic studies marks",
+          },
+        ],
+      },
+      i_pak_studies_marks: {
+        rules: [
+          {
+            type: "integer[33..150]",
+            prompt:
+              "Please enter valid value for pakistan studies marks",
+          },
+        ],
+      },
+      i_math_bio_marks: {
+        rules: [
+          {
+            type: "integer[33..150]",
+            prompt:
+              "Please enter valid value for Mathematics/Biology marks",
+          },
+        ],
+      },
+      i_physics_statistics_marks: {
+        rules: [
+          {
+            type: "integer[33..150]",
+            prompt:
+              "Please enter valid value for Physics/Statistics marks",
+          },
+        ],
+      },
+      i_comp_chem_marks: {
+        rules: [
+          {
+            type: "integer[33..150]",
+            prompt:
+              "Please enter valid value for Computer/Chemistry marks",
           },
         ],
       },

@@ -31,8 +31,6 @@ class Feedback(db.Model):
         return f'<Feedback "{self.content[:20]}...">'
 
 student_details = {
-  "hobbies": "",
-  "goals": ""
 }
 
 @app.route('/')
@@ -75,17 +73,6 @@ def sign_up():
 @app.route('/new_student_details', methods = ['POST','GET'])
 def new_student_details():
   if session['email'] and request.method=='POST':
-    hobbies_input = request.form.get('hobbies')
-    goals_input = request.form.get('goals')
-    m_group_input = request.form.get('m_group')
-    m_english_marks_input = request.form.get('m_english_marks')
-    m_urdu_marks_input = request.form.get('m_urdu_marks')
-    m_islamic_studies_marks_input = request.form.get('m_islamic_studies_marks')
-    m_pak_studies_marks_input = request.form.get('m_pak_studies_marks')
-    m_bio_comp_marks_input = request.form.get('m_bio_comp_marks')
-    m_physics_marks_input = request.form.get('m_physics_marks')
-    m_chemistry_marks_input = request.form.get('m_chemistry_marks')
-    m_mathematics_marks_input = request.form.get('m_mathematics_marks')
     i_group_input = request.form.get('i_group')
     i_english_marks_input = request.form.get('i_english_marks')
     i_urdu_marks_input = request.form.get('i_urdu_marks')
@@ -95,27 +82,19 @@ def new_student_details():
     i_physics_statistics_marks_input = request.form.get('i_physics_statistics_marks')
     i_comp_chem_marks_input = request.form.get('i_comp_chem_marks')
 
-    user_input = pd.DataFrame({ 
-      'Hobbies': [hobbies_input],
-      'Goals': [goals_input],
-      "M-Group": [m_group_input],
-      "M-English Marks":[m_english_marks_input],
-      "M-Urdu Marks":[m_urdu_marks_input],
-      "M-Islamic Studies Marks":[m_islamic_studies_marks_input],
-      "M-Pak Studies Marks":[m_pak_studies_marks_input],
-      "M-Bio/Comp Marks":[m_bio_comp_marks_input],
-      "M-Physics Marks":[m_physics_marks_input],
-      "M-Chemistry Marks":[m_chemistry_marks_input],
-      "M-Mathematics Marks":[m_mathematics_marks_input],
-      "I-Group": [i_group_input],
-      "I-English Marks":[i_english_marks_input],
-      "I-Urdu Marks":[i_urdu_marks_input],
-      "I-Pak Studies Marks":[i_pak_studies_marks_input],
-      "I-Islamic Studies Marks":[i_islamic_studies_marks_input],
-      "I-Math/Bio":[i_math_bio_marks_input],
-      "I-Physics/Statistics":[i_physics_statistics_marks_input],
-      "I-Comp/Chem":[i_comp_chem_marks_input],
-    })
+    student_details['I-Group'] = i_group_input
+    student_details["I-English Marks"] = i_english_marks_input
+    student_details["I-Urdu Marks"] = i_urdu_marks_input
+    student_details["I-Islamic Studies Marks"] = i_islamic_studies_marks_input
+    student_details["I-Pak Studies Marks"] = i_pak_studies_marks_input
+    student_details["I-Math/Bio"] = i_math_bio_marks_input
+    student_details["I-Physics/Statistics"]=i_physics_statistics_marks_input
+    student_details["I-Comp/Chem"]= i_comp_chem_marks_input
+
+    session['student_details'] = student_details
+
+    user_input = pd.DataFrame(student_details, index=[0])
+
     m_group_pkl_file = open('./models/m_group_label_encoder.pkl', 'rb')
     m_group_label_encoder = pickle.load(m_group_pkl_file) 
     m_group_pkl_file.close()
@@ -223,12 +202,32 @@ def student_info():
     hobbies_input = request.form.get('hobbies')
     goals_input = request.form.get('goals')
 
-    student_details['hobbies'] = hobbies_input
-    student_details['goals'] = goals_input
+    student_details['Hobbies'] = hobbies_input
+    student_details['Goals'] = goals_input
     session['student_details'] = student_details
     return '', 204
 
 @app.route('/student_matric_marks',methods = ['POST','GET'])
 def student_matric_marks():
   if request.method == 'POST':
+    m_group_input = request.form.get('m_group')
+    m_english_marks_input = request.form.get('m_english_marks')
+    m_urdu_marks_input = request.form.get('m_urdu_marks')
+    m_islamic_studies_marks_input = request.form.get('m_islamic_studies_marks')
+    m_pak_studies_marks_input = request.form.get('m_pak_studies_marks')
+    m_bio_comp_marks_input = request.form.get('m_bio_comp_marks')
+    m_physics_marks_input = request.form.get('m_physics_marks')
+    m_chemistry_marks_input = request.form.get('m_chemistry_marks')
+    m_mathematics_marks_input = request.form.get('m_mathematics_marks')
+
+    student_details['M-Group'] = m_group_input
+    student_details["M-English Marks"] = m_english_marks_input
+    student_details["M-Urdu Marks"] = m_urdu_marks_input
+    student_details["M-Islamic Studies Marks"] = m_islamic_studies_marks_input
+    student_details["M-Pak Studies Marks"] = m_pak_studies_marks_input
+    student_details["M-Bio/Comp Marks"]= m_bio_comp_marks_input
+    student_details["M-Physics Marks"]= m_physics_marks_input
+    student_details["M-Chemistry Marks"]= m_chemistry_marks_input
+    student_details["M-Mathematics Marks"]= m_mathematics_marks_input
+    session['student_details'] = student_details
     return '', 204
