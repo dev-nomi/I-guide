@@ -1,0 +1,93 @@
+{% extends 'layout.html' %} {% block title %} Sign in {% endblock %} {% block content %}
+<div class="row">
+  <div class="eight wide column">
+    <div class="ui card" style="padding: 0.5rem 1rem">
+      <div class="content">
+        <div class="ui header center aligned">Student Info</div>
+        <div class="description">
+          <div>
+            <strong> Hobbies : </strong>
+            <div class="ui teal label">{{ student["Hobbies"] }}</div>
+          </div>
+          <div>
+            <strong> Goals :</strong>
+            <div class="ui teal label">{{ student["Goals"] }}</div>
+          </div>
+          <div>
+            <strong>Matric Group :</strong>
+            <div class="ui teal label">{{ student["M-Group"] }}</div>
+          </div>
+          <div>
+            <strong>Intermediate Group :</strong>
+            <div class="ui teal label">{{ student["I-Group"] }}</div>
+          </div>
+          <hr />
+          <div>
+            <div>
+              <h4 class="ui center aligned">Matric Marks</h4>
+              <div class="ui teal label">
+                <strong>English Marks :</strong>
+                {{ student["M-English Marks"] }}
+              </div>
+              <div class="ui teal label">
+                <strong>Urdu Marks :</strong> {{ student["M-Urdu Marks"] }}
+              </div>
+              <div class="ui teal label">
+                <strong>Islamic Studies Marks :</strong> {{ student["M-Islamic Studies Marks"] }}
+              </div>
+              <div class="ui teal label">
+                <strong>Pak Studies Marks :</strong> {{ student["M-Pak Studies Marks"] }}
+              </div>
+              <div class="ui teal label">
+                <strong>Biology/Computer Marks :</strong> {{ student["M-Bio/Comp Marks"] }}
+              </div>
+              <div class="ui teal label">
+                <strong>Physics Marks :</strong> {{ student["M-Physics Marks"] }}
+              </div>
+              <div class="ui teal label">
+                <strong>Chemistry Marks :</strong> {{ student["M-Chemistry Marks"] }}
+              </div>
+              <div class="ui teal label">
+                <strong>Mathematics Marks:</strong> {{ student["M-Mathematics Marks"] }}
+              </div>
+            </div>
+            <hr />
+            <div>
+              <h4 class="ui center aligned">Intermediate Marks</h4>
+              <div class="ui teal label">
+                <strong>English Marks :</strong> {{ student["I-English Marks"] }}
+              </div>
+              <div class="ui teal label">
+                <strong>Urdu Marks :</strong> {{ student["I-Urdu Marks"] }}
+              </div>
+              <div class="ui teal label">
+                <strong>Islamic Studies Marks :</strong> {{ student["I-Islamic Studies Marks"] }}
+              </div>
+              <div class="ui teal label">
+                <strong>Pak Studies Marks :</strong> {{ student["I-Pak Studies Marks"] }}
+              </div>
+              <div class="ui teal label">
+                <strong>Mathematics/Biology Marks :</strong> {{ student["I-Math/Bio"] }}
+              </div>
+              <div class="ui teal label">
+                <strong>Physics/Statistics Marks :</strong> {{ student["I-Physics/Statistics"] }}
+              </div>
+              <div class="ui teal label">
+                <strong>Computer/Chemistry Marks :</strong> {{ student["I-Comp/Chem"] }}
+              </div>
+            </div>
+          </div>
+          <div style="margin-top: 1rem">
+            <a
+              class="ui large button predict-button"
+              href="{{ url_for('predict') }}"
+              style="width: 100%"
+              >Predict</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

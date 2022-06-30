@@ -26,3 +26,17 @@ button {
 .steps {
   width: 100%;
 }
+
+.next-button {
+  background: #e0e1e2 none !important;
+  color: rgba(0, 0, 0, 0.6) !important;
+}
+
+.ui.label {
+  margin-top: 0.5rem;
+}
+
+.predict-button {
+  background-color: #06383f !important;
+  color: white !important;
+}
