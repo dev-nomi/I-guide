@@ -18,7 +18,8 @@ class User(db.Model):
   email = db.Column("email",db.String(120), unique=True, nullable=False)
   password = db.Column("password",db.String(60), nullable=False)
   feedbacks = db.relationship('Feedback', backref='user')
-   
+  students = db.relationship('Student', backref='user')
+
   def __repr__(self):
     return f'<User "{self.name}", "{self.email}" >'
 
@@ -55,6 +56,7 @@ class Student(db.Model):
     i_comp_chem_marks = db.Column("I-Comp/Chem",db.Integer)
     program = db.Column("program",db.Text)
     feedback = db.relationship("Feedback", uselist=False, backref="student")
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __repr__(self):
         return f'<StudentDetails "{self.hobbies}","{self.goals}">'
@@ -161,12 +163,14 @@ def feedbacks():
 @app.route('/student_info',methods = ['POST','GET'])
 def student_info():
   if request.method == 'POST':
+    user = User.query.filter_by(email = session['email']).all()
     hobbies_input = request.form.get('hobbies')
     goals_input = request.form.get('goals')
 
     student = Student(
       hobbies=hobbies_input,
       goals=goals_input,
+      user=user[0],
     )
     db.session.add(student)
     db.session.commit()
@@ -310,3 +314,9 @@ def predict():
   student.program = prediction
   db.session.commit()
   return render_template('prediction.html',prediction=prediction)
+
+@app.route('/predictions',methods = ['POST','GET'])
+def predictions():
+  user = User.query.filter_by(email = session['email']).all()
+  predictions = user[0].students
+  return render_template('prediction/index.html',predictions=predictions)

@@ -1,0 +1,110 @@
+{% extends 'layout.html' %} {% block title %} All Predictions {% endblock %} {% block content %}
+<div class="row">
+  <div class="ui eight wide column center aligned">
+    <h1 class="ui">All Predictions</h1>
+  </div>
+</div>
+<div class="row">
+  <div class="ui six wide column">
+    {%for prediction in predictions%}
+    <div class="ui styled accordion">
+      <div class="title">
+        <i class="dropdown icon"></i>
+        {{ prediction.program }}
+      </div>
+      <div class="content">
+        <div>
+          <strong> Hobbies : </strong>
+          <div class="ui teal label">{{ prediction.hobbies }}</div>
+        </div>
+        <div>
+          <strong> Goals :</strong>
+          <div class="ui teal label">{{ prediction.goals }}</div>
+        </div>
+        <div>
+          <strong>Matric Group :</strong>
+          <div class="ui teal label">{{ prediction.m_group }}</div>
+        </div>
+        <div>
+          <strong>Intermediate Group :</strong>
+          <div class="ui teal label">{{ prediction.i_group }}</div>
+        </div>
+        <hr />
+        <div>
+          <div>
+            <h4 class="ui center aligned">Matric Marks</h4>
+            <div class="ui teal label">
+              <strong>English Marks :</strong>
+              {{ prediction.m_english_marks }}
+            </div>
+            <div class="ui teal label">
+              <strong>Urdu Marks :</strong> {{ prediction.m_urdu_marks }}
+            </div>
+            <div class="ui teal label">
+              <strong>Islamic Studies Marks :</strong> {{ prediction.m_islamic_studies_marks }}
+            </div>
+            <div class="ui teal label">
+              <strong>Pak Studies Marks :</strong> {{ prediction.m_pak_studies_marks }}
+            </div>
+            <div class="ui teal label">
+              <strong>Biology/Computer Marks :</strong> {{ prediction.m_bio_comp_marks }}
+            </div>
+            <div class="ui teal label">
+              <strong>Physics Marks :</strong> {{ prediction.m_physics_marks }}
+            </div>
+            <div class="ui teal label">
+              <strong>Chemistry Marks :</strong> {{ prediction.m_chemistry_marks }}
+            </div>
+            <div class="ui teal label">
+              <strong>Mathematics Marks:</strong> {{ prediction.m_mathematics_marks }}
+            </div>
+          </div>
+          <hr />
+          <div>
+            <h4 class="ui center aligned">Intermediate Marks</h4>
+            <div class="ui teal label">
+              <strong>English Marks :</strong> {{ prediction.i_english_marks }}
+            </div>
+            <div class="ui teal label">
+              <strong>Urdu Marks :</strong> {{ prediction.i_urdu_marks }}
+            </div>
+            <div class="ui teal label">
+              <strong>Islamic Studies Marks :</strong> {{ prediction.i_islamic_studies_marks }}
+            </div>
+            <div class="ui teal label">
+              <strong>Pak Studies Marks :</strong> {{ prediction.i_pak_studies_marks }}
+            </div>
+            <div class="ui teal label">
+              <strong>Mathematics/Biology Marks :</strong> {{ prediction.i_math_bio_marks }}
+            </div>
+            <div class="ui teal label">
+              <strong>Physics/Statistics Marks :</strong> {{ prediction.i_physics_statistics_marks
+              }}
+            </div>
+            <div class="ui teal label">
+              <strong>Computer/Chemistry Marks :</strong> {{ prediction.i_comp_chem_marks }}
+            </div>
+          </div>
+        </div>
+        <hr />
+        <div>
+          <h4 class="ui center aligned">Feedback</h4>
+          <div class="ui teal label">{{ prediction.feedback.content }}</div>
+          <div
+            class="ui star rating"
+            data-rating="{{ prediction.feedback.rating }}"
+            data-max-rating="5"
+          ></div>
+        </div>
+      </div>
+    </div>
+    {%endfor%}
+  </div>
+</div>
+
+<script>
+  $(".accordion").accordion("toggle");
+  $(".ui.rating").rating("disable");
+</script>
+
+{% endblock %}

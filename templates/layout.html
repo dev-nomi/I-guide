@@ -50,6 +50,10 @@
           <i class="comments icon"></i>
           All Feedbacks
         </a>
+        <a class="item" href="{{ url_for('predictions')}}">
+          <i class="history icon"></i>
+          All Predictions
+        </a>
         <a class="item" href="{{ url_for('sign_out')}}">
           <i class="sign-out icon"></i>
           Sign out
@@ -65,7 +69,7 @@
         </a>
         {% endif %}
       </div>
-      <div class="pusher" style="background-color: #a2c4c9">
+      <div class="pusher">
         <div class="ui basic segment">
           <div class="ui centered grid stackable column">
             <div class="row" style="margin: -5px 0px">

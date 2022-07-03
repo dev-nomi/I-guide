@@ -2,8 +2,10 @@
   font-family: "Balsamiq Sans", cursive !important;
 }
 
-body {
-  background-color: #a2c4c9;
+.pusher {
+  background-image: url("../img/backgroud.jpg") !important;
+  background-repeat: repeat !important;
+  background-size: 100% !important;
 }
 
 button {
@@ -44,4 +46,8 @@ button {
 .feedback-button {
   justify-content: flex-end;
   display: flex;
+}
+
+.ui.accordion {
+  margin-top: 0.5rem;
 }

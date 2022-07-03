@@ -1,39 +1,21 @@
-{% extends 'layout.html' %} {% block title %} Sign in {%
-endblock %} {% block content %}
-<div class="row">
-  <div class="four wide column">
+{% extends 'layout.html' %} {% block title %} Sign in {% endblock %} {% block content %}
+<div class="row" style="margin-top: 7rem">
+  <div class="five wide column">
     <div class="ui card">
       <div class="content">
-        <div class="ui header center aligned">Sign In</div>
+        <h1 class="ui header center aligned">Sign In</h1>
         <div class="description">
-          <form
-            class="ui form"
-            method="POST"
-            action="{{ url_for('sign_in') }}"
-          >
+          <form class="ui large form" method="POST" action="{{ url_for('sign_in') }}">
             <div class="field">
               <label>Email</label>
-              <input
-                type="email"
-                name="email"
-                placeholder="Email"
-              />
+              <input type="email" name="email" placeholder="Email" />
             </div>
             <div class="field">
               <label>Password</label>
-              <input
-                type="password"
-                name="password"
-                placeholder="Password"
-              />
+              <input type="password" name="password" placeholder="Password" />
             </div>
-            <div
-              class="ui grid centered"
-              style="margin: auto"
-            >
-              <button class="ui button" type="submit">
-                Sign In
-              </button>
+            <div class="ui grid centered" style="margin: auto">
+              <button class="ui large button" type="submit" style="width: 100%">Sign In</button>
             </div>
             <div class="ui error message"></div>
           </form>
@@ -62,8 +44,7 @@ endblock %} {% block content %}
           },
           {
             type: "minLength[6]",
-            prompt:
-              "Your password must be at least {ruleValue} characters",
+            prompt: "Your password must be at least {ruleValue} characters",
           },
         ],
       },
