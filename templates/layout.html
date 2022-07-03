@@ -29,45 +29,73 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
   </head>
   <body>
-    <div class="ui menu">
-      <a class="teal item" href="{{ url_for('home')}}"> Home </a>
-      {% if session['email'] %}
-      <a class="teal item" href="{{ url_for('new_student_details')}}"> Student Details </a>
-      <a class="teal item" href="{{ url_for('feedbacks')}}"> All Feedbacks </a>
-      {% endif %}
-      <div class="right menu">
+    <div class="ui top attached demo menu">
+      <a class="item">
+        <i class="sidebar icon"></i>
+        Menu
+      </a>
+    </div>
+    <div class="ui bottom attached segment pushable">
+      <div class="ui inverted labeled icon left inline vertical sidebar menu">
+        <a class="item" href="{{ url_for('home')}}">
+          <i class="home icon"></i>
+          Home
+        </a>
         {% if session['email'] %}
-        <a class="teal item" href="{{ url_for('sign_out')}}"> Sign out </a>
+        <a class="item" href="{{ url_for('new_student_details')}}">
+          <i class="block layout icon"></i>
+          Student Details
+        </a>
+        <a class="item" href="{{ url_for('feedbacks')}}">
+          <i class="comments icon"></i>
+          All Feedbacks
+        </a>
+        <a class="item" href="{{ url_for('sign_out')}}">
+          <i class="sign-out icon"></i>
+          Sign out
+        </a>
         {% else %}
-        <a class="teal item" href="{{ url_for('sign_in')}}"> Sign in </a>
-        <a class="teal item" href="{{ url_for('sign_up')}}"> Sign up </a>
+        <a class="item" href="{{ url_for('sign_in')}}">
+          <i class="sign-in icon"></i>
+          Sign in
+        </a>
+        <a class="item" href="{{ url_for('sign_up')}}">
+          <i class="user plus icon"></i>
+          Sign up
+        </a>
         {% endif %}
       </div>
-    </div>
-
-    <div class="ui centered grid stackable column">
-      <div class="row" style="margin: -5px 0px">
-        <div class="four wide column">
-          {% with messages = get_flashed_messages(with_categories=true) %} {% if messages %} {% for
-          category,message in messages %}
-          <div class="ui icon {{ category }} mini floating message">
-            {% if category == 'positive'%}
-            <i class="check circle icon"></i>
-            {% else %}
-            <i class="exclamation circle icon"></i>
-            {% endif %}
-            <div class="content">
-              <div class="header">{{ message }}</div>
+      <div class="pusher" style="background-color: #a2c4c9">
+        <div class="ui basic segment">
+          <div class="ui centered grid stackable column">
+            <div class="row" style="margin: -5px 0px">
+              <div class="four wide column">
+                {% with messages = get_flashed_messages(with_categories=true) %} {% if messages %}
+                {% for category,message in messages %}
+                <div class="ui icon {{ category }} mini floating message">
+                  {% if category == 'positive'%}
+                  <i class="check circle icon"></i>
+                  {% else %}
+                  <i class="exclamation circle icon"></i>
+                  {% endif %}
+                  <div class="content">
+                    <div class="header">{{ message }}</div>
+                  </div>
+                  <i class="close icon"></i>
+                </div>
+                {% endfor %} {% endif %} {% endwith %}
+              </div>
             </div>
-            <i class="close icon"></i>
+            {% block content %} {% endblock %}
           </div>
-          {% endfor %} {% endif %} {% endwith %}
         </div>
       </div>
-      {% block content %} {% endblock %}
     </div>
   </body>
   <script>
+    $(".ui.top.attached.demo.menu").click(function () {
+      $(".ui.sidebar").sidebar("toggle");
+    });
     $(".message .close").on("click", function () {
       $(this).closest(".message").transition("fade");
     });

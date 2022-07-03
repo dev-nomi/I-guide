@@ -53,7 +53,7 @@ class Student(db.Model):
     i_math_bio_marks = db.Column("I-Math/Bio",db.Integer)
     i_physics_statistics_marks = db.Column("I-Physics/Statistics",db.Integer)
     i_comp_chem_marks = db.Column("I-Comp/Chem",db.Integer)
-    program = db.Column("program",db.Integer)
+    program = db.Column("program",db.Text)
     feedback = db.relationship("Feedback", uselist=False, backref="student")
 
     def __repr__(self):
@@ -149,7 +149,7 @@ def feedback():
     db.session.add(feedback)
     db.session.commit()
     flash('You were successfully added feedback.','positive')
-    return redirect(url_for('home'))
+    return redirect(url_for('feedbacks'))
   else:
     return render_template('feedback/add.html')
 
@@ -294,11 +294,8 @@ def predict():
 
   model = pickle.load(open('./models/gnb_trained_model.pkl', 'rb'))
   predicted_program = model.predict(unseen_data_features)
-
   student = Student.query.order_by(Student.id.desc()).first()
-  student.program = predicted_program
-  db.session.commit()
-  
+
   if(predicted_program == 0): 
     prediction = "BS Chemical Engineering"
   elif(predicted_program == 1):
@@ -310,5 +307,6 @@ def predict():
   elif(predicted_program == 4):
     prediction = "BS Software Engineering"
 
-
+  student.program = prediction
+  db.session.commit()
   return render_template('prediction.html',prediction=prediction)
