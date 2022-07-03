@@ -2,10 +2,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %} {% endblock %}</title>
     <link
       rel="stylesheet"
@@ -23,58 +20,27 @@
       integrity="sha256-t8GepnyPmw9t+foMh3mKNvcorqNHamSKtKRxxpUEgFI="
       crossorigin="anonymous"
     ></script>
-    <link
-      rel="preconnect"
-      href="https://fonts.googleapis.com"
-    />
-    <link
-      rel="preconnect"
-      href="https://fonts.gstatic.com"
-      crossorigin
-    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans:ital,wght@0,400;0,700;1,400&display=swap"
       rel="stylesheet"
     />
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='css/style.css') }}"
-    />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
   </head>
   <body>
     <div class="ui menu">
-      <a class="teal item" href="{{ url_for('home')}}">
-        Home
-      </a>
+      <a class="teal item" href="{{ url_for('home')}}"> Home </a>
       {% if session['email'] %}
-      <a
-        class="teal item"
-        href="{{ url_for('new_student_details')}}"
-      >
-        Student Details
-      </a>
-      <a class="teal item" href="{{ url_for('feedback')}}">
-        Feedback
-      </a>
-      <a class="teal item" href="{{ url_for('feedbacks')}}">
-        All Feedbacks
-      </a>
+      <a class="teal item" href="{{ url_for('new_student_details')}}"> Student Details </a>
+      <a class="teal item" href="{{ url_for('feedbacks')}}"> All Feedbacks </a>
       {% endif %}
       <div class="right menu">
         {% if session['email'] %}
-        <a
-          class="teal item"
-          href="{{ url_for('sign_out')}}"
-        >
-          Sign out
-        </a>
+        <a class="teal item" href="{{ url_for('sign_out')}}"> Sign out </a>
         {% else %}
-        <a class="teal item" href="{{ url_for('sign_in')}}">
-          Sign in
-        </a>
-        <a class="teal item" href="{{ url_for('sign_up')}}">
-          Sign up
-        </a>
+        <a class="teal item" href="{{ url_for('sign_in')}}"> Sign in </a>
+        <a class="teal item" href="{{ url_for('sign_up')}}"> Sign up </a>
         {% endif %}
       </div>
     </div>
@@ -82,13 +48,9 @@
     <div class="ui centered grid stackable column">
       <div class="row" style="margin: -5px 0px">
         <div class="four wide column">
-          {% with messages =
-          get_flashed_messages(with_categories=true) %} {%
-          if messages %} {% for category,message in messages
-          %}
-          <div
-            class="ui icon {{ category }} mini floating message"
-          >
+          {% with messages = get_flashed_messages(with_categories=true) %} {% if messages %} {% for
+          category,message in messages %}
+          <div class="ui icon {{ category }} mini floating message">
             {% if category == 'positive'%}
             <i class="check circle icon"></i>
             {% else %}

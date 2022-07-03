@@ -1,11 +1,17 @@
-{% extends 'layout.html' %} {% block title %} Prediction {%
-endblock %} {% block content %}
+{% extends 'layout.html' %} {% block title %} Prediction {% endblock %} {% block content %}
 <div class="row">
   <div class="eight wide column">
-    <h1 class="ui">Predicted degree program</h1>
-    <h2 class="ui" style="color: aliceblue">
-      {{ prediction }}
-    </h2>
+    <div class="ui card" style="padding: 0.5rem 1rem">
+      <div class="content">
+        <div class="feedback-button">
+          <a class="ui large button predict-button" href="{{ url_for('feedback') }}"> Feedback </a>
+        </div>
+        <div class="ui header">Predicted degree program</div>
+        <div class="description">
+          <p class="ui">{{ prediction }}</p>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 {% endblock %}

@@ -1,3 +1,4 @@
+from this import s
 from flask import Flask,render_template,request,flash,redirect,url_for,session
 import pandas as pd
 import pickle5 as pickle
@@ -26,9 +27,37 @@ class Feedback(db.Model):
     content = db.Column("content",db.Text)
     rating = db.Column("rating",db.Integer)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
 
     def __repr__(self):
         return f'<Feedback "{self.content[:20]}...">'
+
+class Student(db.Model):
+    id = db.Column("id",db.Integer, primary_key=True)
+    hobbies = db.Column("Hobbies",db.Text)
+    goals = db.Column("Goals",db.Text)
+    m_group = db.Column("M-Group",db.Text)
+    m_english_marks = db.Column("M-English Marks",db.Integer)
+    m_urdu_marks = db.Column("M-Urdu Marks",db.Integer)
+    m_islamic_studies_marks = db.Column("M-Islamic Studies Marks",db.Integer)
+    m_pak_studies_marks = db.Column("M-Pak Studies Marks",db.Integer)
+    m_bio_comp_marks = db.Column("M-Bio/Comp Marks",db.Integer)
+    m_physics_marks = db.Column("M-Physics Markss",db.Integer)
+    m_chemistry_marks = db.Column("M-Chemistry Marks",db.Integer)
+    m_mathematics_marks = db.Column("M-Mathematics Marks",db.Integer)
+    i_group = db.Column("I-Group",db.Text)
+    i_english_marks = db.Column("I-English Marks",db.Integer)
+    i_urdu_marks = db.Column("I-Urdu Marks",db.Integer)
+    i_islamic_studies_marks = db.Column("I-Islamic Studies Marks",db.Integer)
+    i_pak_studies_marks = db.Column("I-Pak Studies Marks",db.Integer)
+    i_math_bio_marks = db.Column("I-Math/Bio",db.Integer)
+    i_physics_statistics_marks = db.Column("I-Physics/Statistics",db.Integer)
+    i_comp_chem_marks = db.Column("I-Comp/Chem",db.Integer)
+    program = db.Column("program",db.Integer)
+    feedback = db.relationship("Feedback", uselist=False, backref="student")
+
+    def __repr__(self):
+        return f'<StudentDetails "{self.hobbies}","{self.goals}">'
 
 student_details = {
 }
@@ -92,7 +121,31 @@ def new_student_details():
     student_details["I-Comp/Chem"]= i_comp_chem_marks_input
 
     session['student_details'] = student_details
-
+    
+    student = Student(
+      hobbies=student_details['Hobbies'],
+      goals=student_details['Goals'],
+      m_group=student_details['M-Group'],
+      m_english_marks = student_details["M-English Marks"],
+      m_urdu_marks = student_details["M-Urdu Marks"],
+      m_islamic_studies_marks = student_details["M-Islamic Studies Marks"],
+      m_pak_studies_marks = student_details["M-Pak Studies Marks"],
+      m_bio_comp_marks = student_details["M-Bio/Comp Marks"],
+      m_physics_marks = student_details["M-Physics Marks"],
+      m_chemistry_marks = student_details["M-Chemistry Marks"],
+      m_mathematics_marks = student_details["M-Mathematics Marks"],
+      i_group = student_details["I-Group"],
+      i_english_marks = student_details["I-English Marks"],
+      i_urdu_marks = student_details["I-Urdu Marks"],
+      i_islamic_studies_marks = student_details["I-Islamic Studies Marks"],
+      i_pak_studies_marks = student_details["I-Pak Studies Marks"],
+      i_math_bio_marks = student_details["I-Math/Bio"],
+      i_physics_statistics_marks = student_details["I-Physics/Statistics"],
+      i_comp_chem_marks = student_details["I-Comp/Chem"],
+    )
+    db.session.add(student)
+    db.session.commit()
+    flash('You were successfully added student details.','positive')
     return redirect(url_for('show_student'))
   elif request.method == 'GET':
     return render_template('student/add.html')
@@ -110,9 +163,15 @@ def sign_out():
 def feedback():
   if session['email'] and request.method=='POST':
     user = User.query.filter_by(email = session['email']).all()
+    student = Student.query.order_by(Student.id.desc()).first()
     comment_input = request.form.get('comment')
     rating_input = request.form.get('rating')
-    feedback = Feedback(content=comment_input,rating=rating_input,user=user[0])
+    feedback = Feedback(
+      content=comment_input,
+      rating=rating_input,
+      user=user[0],
+      student=student
+    )
     db.session.add(feedback)
     db.session.commit()
     flash('You were successfully added feedback.','positive')
@@ -234,6 +293,10 @@ def predict():
   model = pickle.load(open('./models/gnb_trained_model.pkl', 'rb'))
   predicted_program = model.predict(unseen_data_features)
 
+  student = Student.query.order_by(Student.id.desc()).first()
+  student.program = predicted_program
+  db.session.commit()
+  
   if(predicted_program == 0): 
     prediction = "BS Chemical Engineering"
   elif(predicted_program == 1):
