@@ -122,29 +122,29 @@ def new_student_details():
 
     session['student_details'] = student_details
 
-    # student = Student(
-    #   hobbies=student_details['Hobbies'],
-    #   goals=student_details['Goals'],
-    #   m_group=student_details['M-Group'],
-    #   m_english_marks = student_details["M-English Marks"],
-    #   m_urdu_marks = student_details["M-Urdu Marks"],
-    #   m_islamic_studies_marks = student_details["M-Islamic Studies Marks"],
-    #   m_pak_studies_marks = student_details["M-Pak Studies Marks"],
-    #   m_bio_comp_marks = student_details["M-Bio/Comp Marks"],
-    #   m_physics_marks = student_details["M-Physics Marks"],
-    #   m_chemistry_marks = student_details["M-Chemistry Marks"],
-    #   m_mathematics_marks = student_details["M-Mathematics Marks"],
-    #   i_group = student_details["I-Group"],
-    #   i_english_marks = student_details["I-English Marks"],
-    #   i_urdu_marks = student_details["I-Urdu Marks"],
-    #   i_islamic_studies_marks = student_details["I-Islamic Studies Marks"],
-    #   i_pak_studies_marks = student_details["I-Pak Studies Marks"],
-    #   i_math_bio_marks = student_details["I-Math/Bio"],
-    #   i_physics_statistics_marks = student_details["I-Physics/Statistics"],
-    #   i_comp_chem_marks = student_details["I-Comp/Chem"],
-    # )
-    # db.session.add(student)
-    # db.session.commit()
+    student = Student(
+      hobbies=student_details['Hobbies'],
+      goals=student_details['Goals'],
+      m_group=student_details['M-Group'],
+      m_english_marks = student_details["M-English Marks"],
+      m_urdu_marks = student_details["M-Urdu Marks"],
+      m_islamic_studies_marks = student_details["M-Islamic Studies Marks"],
+      m_pak_studies_marks = student_details["M-Pak Studies Marks"],
+      m_bio_comp_marks = student_details["M-Bio/Comp Marks"],
+      m_physics_marks = student_details["M-Physics Marks"],
+      m_chemistry_marks = student_details["M-Chemistry Marks"],
+      m_mathematics_marks = student_details["M-Mathematics Marks"],
+      i_group = student_details["I-Group"],
+      i_english_marks = student_details["I-English Marks"],
+      i_urdu_marks = student_details["I-Urdu Marks"],
+      i_islamic_studies_marks = student_details["I-Islamic Studies Marks"],
+      i_pak_studies_marks = student_details["I-Pak Studies Marks"],
+      i_math_bio_marks = student_details["I-Math/Bio"],
+      i_physics_statistics_marks = student_details["I-Physics/Statistics"],
+      i_comp_chem_marks = student_details["I-Comp/Chem"],
+    )
+    db.session.add(student)
+    db.session.commit()
     flash('You were successfully added student details.','positive')
     return redirect(url_for('show_student'))
   elif request.method == 'GET':
