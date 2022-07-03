@@ -1,4 +1,4 @@
-{% extends 'layout.html' %} {% block title %} Sign in {% endblock %} {% block content %}
+{% extends 'layout.html' %} {% block title %} Show Student {% endblock %} {% block content %}
 <div class="row">
   <div class="eight wide column">
     <div class="ui card" style="padding: 0.5rem 1rem">
@@ -7,19 +7,19 @@
         <div class="description">
           <div>
             <strong> Hobbies : </strong>
-            <div class="ui teal label">{{ student["Hobbies"] }}</div>
+            <div class="ui teal label">{{ student.hobbies }}</div>
           </div>
           <div>
             <strong> Goals :</strong>
-            <div class="ui teal label">{{ student["Goals"] }}</div>
+            <div class="ui teal label">{{ student.goals }}</div>
           </div>
           <div>
             <strong>Matric Group :</strong>
-            <div class="ui teal label">{{ student["M-Group"] }}</div>
+            <div class="ui teal label">{{ student.m_group }}</div>
           </div>
           <div>
             <strong>Intermediate Group :</strong>
-            <div class="ui teal label">{{ student["I-Group"] }}</div>
+            <div class="ui teal label">{{ student.i_group }}</div>
           </div>
           <hr />
           <div>
@@ -27,53 +27,53 @@
               <h4 class="ui center aligned">Matric Marks</h4>
               <div class="ui teal label">
                 <strong>English Marks :</strong>
-                {{ student["M-English Marks"] }}
+                {{ student.m_english_marks }}
               </div>
               <div class="ui teal label">
-                <strong>Urdu Marks :</strong> {{ student["M-Urdu Marks"] }}
+                <strong>Urdu Marks :</strong> {{ student.m_urdu_marks }}
               </div>
               <div class="ui teal label">
-                <strong>Islamic Studies Marks :</strong> {{ student["M-Islamic Studies Marks"] }}
+                <strong>Islamic Studies Marks :</strong> {{ student.m_islamic_studies_marks }}
               </div>
               <div class="ui teal label">
-                <strong>Pak Studies Marks :</strong> {{ student["M-Pak Studies Marks"] }}
+                <strong>Pak Studies Marks :</strong> {{ student.m_pak_studies_marks }}
               </div>
               <div class="ui teal label">
-                <strong>Biology/Computer Marks :</strong> {{ student["M-Bio/Comp Marks"] }}
+                <strong>Biology/Computer Marks :</strong> {{ student.m_bio_comp_marks }}
               </div>
               <div class="ui teal label">
-                <strong>Physics Marks :</strong> {{ student["M-Physics Marks"] }}
+                <strong>Physics Marks :</strong> {{ student.m_physics_marks }}
               </div>
               <div class="ui teal label">
-                <strong>Chemistry Marks :</strong> {{ student["M-Chemistry Marks"] }}
+                <strong>Chemistry Marks :</strong> {{ student.m_chemistry_marks }}
               </div>
               <div class="ui teal label">
-                <strong>Mathematics Marks:</strong> {{ student["M-Mathematics Marks"] }}
+                <strong>Mathematics Marks:</strong> {{ student.m_mathematics_marks }}
               </div>
             </div>
             <hr />
             <div>
               <h4 class="ui center aligned">Intermediate Marks</h4>
               <div class="ui teal label">
-                <strong>English Marks :</strong> {{ student["I-English Marks"] }}
+                <strong>English Marks :</strong> {{ student.i_english_marks }}
               </div>
               <div class="ui teal label">
-                <strong>Urdu Marks :</strong> {{ student["I-Urdu Marks"] }}
+                <strong>Urdu Marks :</strong> {{ student.i_urdu_marks }}
               </div>
               <div class="ui teal label">
-                <strong>Islamic Studies Marks :</strong> {{ student["I-Islamic Studies Marks"] }}
+                <strong>Islamic Studies Marks :</strong> {{ student.i_islamic_studies_marks }}
               </div>
               <div class="ui teal label">
-                <strong>Pak Studies Marks :</strong> {{ student["I-Pak Studies Marks"] }}
+                <strong>Pak Studies Marks :</strong> {{ student.i_pak_studies_marks }}
               </div>
               <div class="ui teal label">
-                <strong>Mathematics/Biology Marks :</strong> {{ student["I-Math/Bio"] }}
+                <strong>Mathematics/Biology Marks :</strong> {{ student.i_math_bio_marks }}
               </div>
               <div class="ui teal label">
-                <strong>Physics/Statistics Marks :</strong> {{ student["I-Physics/Statistics"] }}
+                <strong>Physics/Statistics Marks :</strong> {{ student.i_physics_statistics_marks }}
               </div>
               <div class="ui teal label">
-                <strong>Computer/Chemistry Marks :</strong> {{ student["I-Comp/Chem"] }}
+                <strong>Computer/Chemistry Marks :</strong> {{ student.i_comp_chem_marks }}
               </div>
             </div>
           </div>
