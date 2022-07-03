@@ -176,6 +176,7 @@
       $(".matric-error").css("display", "block");
       is_valid = $(".ui.form.matric-marks-form").form("is valid");
       if (is_valid) {
+        $(".matric-error").css("display", "none");
         $(".second").addClass("completed");
         $("#info").hide();
         $("#matric").hide();
@@ -188,6 +189,10 @@
 
     $(".inter-info").click(function () {
       $(".inter-error").css("display", "block");
+      is_valid = $(".ui.form.inter-marks-form").form("is valid");
+      if (is_valid) {
+        $(".inter-error").css("display", "none");
+      }
     });
 
     $(".ui.form.info-form").form({

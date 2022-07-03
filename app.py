@@ -201,7 +201,7 @@ def predict():
   unseen_data_features['Goals'] = ' '.join(tokenized_goals[0])
 
   hobbies = unseen_data_features['Hobbies']
-  count_vectorizer_hobbies_pkl_file = open('./models/count_vectorizer_hobbies_unigram.pkl', 'rb')
+  count_vectorizer_hobbies_pkl_file = open('./models/count_vectorizer_hobbies_unigram_to_trigram.pkl', 'rb')
   count_vectorizer_hobbies = pickle.load(count_vectorizer_hobbies_pkl_file) 
   count_vectorizer_hobbies_pkl_file.close()
   # Transform the Input Text using Count Vectorizer
@@ -215,7 +215,7 @@ def predict():
 
 
   goals = unseen_data_features['Goals']
-  count_vectorizer_goals_pkl_file = open('./models/count_vectorizer_goals_unigram.pkl', 'rb')
+  count_vectorizer_goals_pkl_file = open('./models/count_vectorizer_goals_unigram_to_trigram.pkl', 'rb')
   count_vectorizer_goals = pickle.load(count_vectorizer_goals_pkl_file) 
   count_vectorizer_goals_pkl_file.close()
 
@@ -235,8 +235,15 @@ def predict():
   predicted_program = model.predict(unseen_data_features)
 
   if(predicted_program == 0): 
-    prediction = "Computer Science"
-  if(predicted_program == 1):
-    prediction = "Software Engineering"
+    prediction = "BS Chemical Engineering"
+  elif(predicted_program == 1):
+    prediction = "BS Computer Engineering"
+  elif(predicted_program == 2):
+    prediction = "BS Computer Sciences"
+  elif(predicted_program == 3):
+    prediction = "BS Electrical Engineering"
+  elif(predicted_program == 4):
+    prediction = "BS Software Engineering"
+
 
   return render_template('prediction.html',prediction=prediction)
