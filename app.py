@@ -60,6 +60,16 @@ class Student(db.Model):
     def __repr__(self):
         return f'<StudentDetails "{self.hobbies}","{self.goals}">'
 
+class University(db.Model):
+  id = db.Column("id",db.Integer, primary_key=True)
+  name = db.Column("name",db.Text)
+  course_offered = db.Column("course_offered",db.Text)
+  fee = db.Column("fee",db.Integer)
+
+  def __repr__(self):
+    return f'<University "{self.name}", "{self.course_offered}","{self.fee}" >'
+
+
 @app.route('/')
 def home():
   return render_template('home.html')
