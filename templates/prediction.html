@@ -1,17 +1,25 @@
 {% extends 'layout.html' %} {% block title %} Prediction {% endblock %} {% block content %}
 <div class="row">
   <div class="eight wide column">
-    <div class="ui card" style="padding: 0.5rem 1rem">
+    <div class="ui card bounce" style="padding: 0.5rem 1rem; margin-top: 7rem">
       <div class="content">
-        <div class="feedback-button">
-          <a class="ui large button predict-button" href="{{ url_for('feedback') }}"> Feedback </a>
-        </div>
+        <div class="ui header center aligned">Prediction</div>
         <div class="ui header">Predicted degree program</div>
-        <div class="description">
-          <p class="ui">{{ prediction }}</p>
+        <p class="ui">{{ prediction }}</p>
+        <div class="ui header">Recommended Universities</div>
+        {%for university in universities%}
+        <p class="ui">{{ university.name }}</p>
+        {% else %}
+        <p>None</p>
+        {%endfor%}
+        <div class="feedback-button">
+          <a class="ui button predict-button" href="{{ url_for('feedback') }}"> Feedback </a>
         </div>
       </div>
     </div>
   </div>
 </div>
+<script>
+  $(".bounce").transition("bounce");
+</script>
 {% endblock %}

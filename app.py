@@ -36,6 +36,7 @@ class Student(db.Model):
     id = db.Column("id",db.Integer, primary_key=True)
     hobbies = db.Column("Hobbies",db.Text)
     goals = db.Column("Goals",db.Text)
+    income = db.Column("Income",db.Integer)
     m_group = db.Column("M-Group",db.Text)
     m_english_marks = db.Column("M-English Marks",db.Integer)
     m_urdu_marks = db.Column("M-Urdu Marks",db.Integer)
@@ -175,9 +176,12 @@ def student_info():
     user = User.query.filter_by(email = session['email']).all()
     hobbies_input = request.form.get('hobbies')
     goals_input = request.form.get('goals')
+    income_input = request.form.get('income')
+
     student = Student(
       hobbies=hobbies_input,
       goals=goals_input,
+      income=income_input,
       user=user[0],
     )
     db.session.add(student)
@@ -320,8 +324,9 @@ def predict():
     prediction = "BS Software Engineering"
 
   student.program = prediction
+  universities = University.query.filter(University.course_offered == prediction,University.fee <= student.income * 6).all()
   db.session.commit()
-  return render_template('prediction.html',prediction=prediction)
+  return render_template('prediction.html',prediction=prediction,universities=universities)
 
 @app.route('/predictions',methods = ['POST','GET'])
 def predictions():

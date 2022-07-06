@@ -22,6 +22,10 @@
                 <label>Goals</label>
                 <input type="text" name="goals" placeholder="Enter your goals" />
               </div>
+              <div class="field">
+                <label>Estimated monthly income</label>
+                <input type="number" name="income" placeholder="Enter your income" />
+              </div>
               <button class="ui large button info-next next-button" type="submit">Next</button>
               <div class="ui error message"></div>
             </div>
@@ -209,6 +213,14 @@
             {
               type: "empty",
               prompt: "Goals Can't be Empty",
+            },
+          ],
+        },
+        income: {
+          rules: [
+            {
+              type: "empty",
+              prompt: "Income Can't be Empty",
             },
           ],
         },
