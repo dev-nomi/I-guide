@@ -51,3 +51,7 @@ button {
 .ui.accordion {
   margin-top: 0.5rem;
 }
+
+.ui.bottom.attached.segment.pushable {
+  margin-bottom: 0 !important;
+}

@@ -1,4 +1,3 @@
-from this import s
 from flask import Flask,render_template,request,flash,redirect,url_for,session
 import pandas as pd
 import pickle5 as pickle
@@ -166,7 +165,6 @@ def student_info():
     user = User.query.filter_by(email = session['email']).all()
     hobbies_input = request.form.get('hobbies')
     goals_input = request.form.get('goals')
-
     student = Student(
       hobbies=hobbies_input,
       goals=goals_input,
